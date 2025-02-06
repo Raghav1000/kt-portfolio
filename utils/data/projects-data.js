@@ -14,7 +14,7 @@ export const projectsData = [
     ],
     role: "Fullstack Developer",
     code: "",
-    demo: "",
+    demo: "https://href-social.vercel.app/",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const projectsData = [
       ],
     role: "Full Stack Developer",
     code: "",
-    demo: "",
+    demo: "https://lead-a-lot.netlify.app/",
   },
   {
     id: 3,
@@ -51,5 +51,21 @@ export const projectsData = [
     code: "",
     role: "Full Stack Developer",
     demo: "",
+  },
+  {
+    id: 4,
+    name: "Unifiedmari",
+    img:"/unifiedmari.png",
+    description:
+      "Designed and developed a comprehensive shipping website tailored to the needs of a global maritime services provider. The platform delivers a full spectrum of maritime solutions, ensuring seamless navigation, user-friendly interfaces, and an efficient service experience. Built with a focus on performance, security, and scalability, the website effectively represents the client's commitment to excellence in the shipping industry.",
+      tools: [
+        "React",
+        "JS",
+        "Tailwind",
+        "Redux",
+      ],
+    code: "",
+    role: "Full Stack Developer",
+    demo: "https://www.unifiedmari.com",
   },
 ];

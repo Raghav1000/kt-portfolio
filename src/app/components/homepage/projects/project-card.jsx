@@ -1,11 +1,14 @@
 // @flow strict
-
+"use client"
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
+
 function ProjectCard({ project }) {
+  const nav = useRouter()
 
   return (
-    <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
+    <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full cursor-pointer" onClick={() => window.open(project?.demo)}>
       <img src={project?.img} height={200}/>
       <div className="flex flex-row">
         <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-violet-600"></div>
