@@ -19,8 +19,7 @@ function AboutSection() {
             Who I am?
           </p>
           <p className="text-gray-200 text-sm lg:text-lg">
-          I'm Kishan Thakur, a Frontend Developer with over 2 years of experience in crafting user-friendly websites. My expertise includes HTML, CSS, JavaScript, and ReactJS, and I'm always eager to explore new technologies. I pride myself on my detail-oriented approach and commitment to quality. My experience ranges from creating a Lead management Web Application for a client to automating web testing processes, honing my technical skills and emphasizing the importance of teamwork and communication.
-
+          I'm Kishan Thakur, a Software Developer with 4 years of experience in full-stack development. Skilled in ReactJS, Next.js, Svelte, Node.js, NestJS, and databases like MongoDB and PostgreSQL. I focus on creating scalable solutions and quality code, with experience in automating web testing and working on various web applications. Always eager to learn and adapt to new technologies.
           </p>
         </div>
         <div className="flex justify-center order-1 lg:order-2">
