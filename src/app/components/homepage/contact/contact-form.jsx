@@ -1,7 +1,6 @@
 "use client";
 // @flow strict
 import { isValidEmail } from "../../../../../utils/check-email";
-import axios from "axios";
 import { useState } from "react";
 import { TbMailForward } from "react-icons/tb";
 import { toast } from "react-toastify";
@@ -14,6 +13,7 @@ function ContactForm() {
     email: "",
     message: "",
   });
+  const [result, setResult] = useState("");
 
   const checkRequired = () => {
     if (userInput.email && userInput.message && userInput.name) {
@@ -31,26 +31,38 @@ function ContactForm() {
       return;
     } else {
       setError({ ...error, required: false });
-    };
+    }
 
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/contact`,
-        userInput
-      );
+      setResult("Sending...");
+      const formData = new FormData();
+      formData.append("name", userInput.name);
+      formData.append("email", userInput.email);
+      formData.append("message", userInput.message);
+      formData.append("access_key", "38fba479-a51a-4bb0-843a-f79f75874300");
 
-      toast.success("Message sent successfully!");
-      setUserInput({
-        name: "",
-        email: "",
-        message: "",
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
       });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Message sent successfully!");
+        setResult("Form Submitted Successfully");
+        setUserInput({ name: "", email: "", message: "" });
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+        toast.error(data.message);
+      }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   return (
@@ -65,7 +77,7 @@ function ContactForm() {
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="text"
               maxLength="100"
-              required={true}
+              required
               onChange={(e) => setUserInput({ ...userInput, name: e.target.value })}
               onBlur={checkRequired}
               value={userInput.name}
@@ -78,7 +90,7 @@ function ContactForm() {
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="email"
               maxLength="100"
-              required={true}
+              required
               value={userInput.email}
               onChange={(e) => setUserInput({ ...userInput, email: e.target.value })}
               onBlur={() => {
@@ -95,7 +107,7 @@ function ContactForm() {
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               maxLength="500"
               name="message"
-              required={true}
+              required
               onChange={(e) => setUserInput({ ...userInput, message: e.target.value })}
               onBlur={checkRequired}
               rows="4"
@@ -103,29 +115,26 @@ function ContactForm() {
             />
           </div>
           <div className="flex flex-col items-center gap-3">
-            {error.required && <p className="text-sm text-red-400">
-              All fiels are required!
-            </p>}
+            {error.required && <p className="text-sm text-red-400">All fields are required!</p>}
             <button
               className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-5 md:px-12 py-2.5 md:py-3 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold"
               role="button"
               onClick={handleSendMail}
               disabled={isLoading}
             >
-              {
-                isLoading ?
-                <span>Sending Message...</span>:
+              {isLoading ? <span>Sending Message...</span> : (
                 <span className="flex items-center gap-1">
                   Send Message
                   <TbMailForward size={20} />
                 </span>
-              }
+              )}
             </button>
+            <span>{result}</span>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ContactForm;
